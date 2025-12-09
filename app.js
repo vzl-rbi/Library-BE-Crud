@@ -48,10 +48,46 @@ app.get("/book", async (req, res) => {
 app.get("/book/:id", async (req, res) => {
   const id = req.params.id;
   const book = await Book.findById(id); //object return garxa
-  res.status(200).json({
-    message: "single data fetched successfuly",
-    data: book,
+  if (!book) {
+    res.status(404).json({ message: "Nothing Found!!" });
+  } else {
+    res.status(200).json({
+      message: "single data fetched successfuly",
+      data: book,
+    });
+  }
+});
+
+//delete book operation
+app.delete("/book/:id", async (req, res) => {
+  const id = req.params.id;
+  await Book.findByIdAndDelete(id);
+  res.status(200).json({ message: "Book deleted Successfully" });
+});
+
+//Update book operation
+app.patch("/book/:id", async (req, res) => {
+  const id = req.params.id;
+  const {
+    bookName,
+    bookPrice,
+    isbnNumber,
+    authorName,
+    publishedAt,
+    publication,
+  } = req.body;
+  // yasari garda ni bhayo but ramro tarika hoina
+  // Book.findByIdAndUpdate(id, req.body);
+
+  await Book.findByIdAndUpdate(id, {
+    bookName: bookName,
+    bookPrice: bookPrice,
+    isbnNumber: isbnNumber,
+    authorName: authorName,
+    publishedAt: publishedAt,
+    publication: publication,
   });
+  res.status(200).json({ message: "Book Updated Succesfully!!" });
 });
 
 app.listen(PORT, () =>
