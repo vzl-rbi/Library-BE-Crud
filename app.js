@@ -2,6 +2,10 @@ import express from "express";
 import mongoose from "mongoose";
 import { connectToDb } from "./database/index.js";
 import { Book } from "./model/bookModel.js";
+//multerConfig imports
+import multer from "multer";
+import { storage } from "./middleware/multerConfig.js";
+const upload = multer({ storage: storage });
 const app = express();
 const PORT = 8000;
 
@@ -13,7 +17,7 @@ app.get("/", (req, res) => {
   res.status(200).json({ message: "Success" });
 });
 // Book create system
-app.post("/book", async (req, res) => {
+app.post("/book", upload.single("image"), async (req, res) => {
   // console.log(req.body);
   // console.log(req.body.bookName); // book ko name matra request garna man lagyo
   const {

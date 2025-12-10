@@ -51,3 +51,9 @@ Nosql: new column name add garesi migrate garna pardaina afai update hunx
 # object ma length check garna pardaina
 
 # array ma length check garna parne hunxa
+
+# CRUD system banaim
+
+4. # multer install gareko to handle file like images, video,docuemnt etc
+
+# file uploaded from postman i.e form-data
