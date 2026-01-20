@@ -126,3 +126,5 @@ callback(new Error("Not allowed by CORS"));
 methods: ["GET", "POST", "PATCH", "DELETE"],
 })
 );
+
+## dotenv install for sensitive data to secure in .env and use .gitignore

@@ -1,24 +1,26 @@
 import express from "express";
 import fs from "fs";
+import dotenv from "dotenv";
 import { connectToDb } from "./database/index.js";
 import { Book } from "./model/bookModel.js";
 //multerConfig imports
 import multer from "multer";
 import { storage } from "./middleware/multerConfig.js";
 import cors from "cors";
+dotenv.config();
 const app = express();
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 // Enable CORS for all routes
 app.use(cors());
 app.use(
   cors({
     origin: "*", //// Allow only my React app oR http://localhost:5173 " or "*""
     method: ["GET", "POST", "PATCH", "DELETE"],
-  })
+  }),
 );
 const upload = multer({ storage: storage });
 
-app.use(express.json()); //postman ma haleko json data yo code halse matra node.js le buhne garxa and undefined audaina
+app.use(express.json()); //postman ma haleko json data yo code halse matra node.js le bujhne garxa ani undefined audaina
 
 connectToDb();
 app.get("/", (req, res) => {
@@ -135,5 +137,5 @@ app.patch("/book/:id", upload.single("image"), async (req, res) => {
 app.use(express.static("./storage/"));
 
 app.listen(PORT, () =>
-  console.log(`Server running at http://localhost:${PORT}`)
+  console.log(`Server running at http://localhost:${PORT}`),
 );
